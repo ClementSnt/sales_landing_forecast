@@ -28,7 +28,7 @@ Two model architectures are compared:
 1. **Data preparation**  
    - Generation of observation sequences for each consumption date.  
    - Calculation of cumulative bookings, prices, and derived temporal features.  
-   - Integration of calendar features (month, weekday, holidays).  
+   - Integration of calendar features (month, weekday, holidays, bank holidays).  
 
 2. **Model training**  
    - Separate pipelines for baseline and hybrid models.  
@@ -43,9 +43,9 @@ Two model architectures are compared:
 
 ## Results 
 
-| Modèle       | Train MAPE | Train R² | Test MAPE | Test R² |
+| Model        | Train MAPE | Train R² | Test MAPE | Test R² |
 | ------------ | ---------- | -------- | --------- | ------- |
-| XGBoost seul | 2.00%      | 0.985    | 3.50%     | 0.955   |
+| XGBoost alone| 2.00%      | 0.985    | 3.50%     | 0.955   |
 | Hybride      | 2.82%      | 0.975    | 2.90%     | 0.973   |
 
 
@@ -56,7 +56,7 @@ Two model architectures are compared:
 
 ## 🧩 Example Input (simplified)
 
-Exemple de Sales.csv
+Exemple Sales.csv
 | CONSUMPTION_DATE | SALES_DATE | Sales | Revenues |
 | ---------------- | ---------- | ----- | -------- |
 | 2024-09-01       | 2024-08-01 | 10    | 500      |
@@ -66,7 +66,7 @@ Exemple de Sales.csv
 | 2024-09-02       | 2024-08-02 | 8     | 400      |
 
 
-Exemple de Calendar.csv 
+Exemple Calendar.csv 
 | Date       | Holidays    | Bank_holidays    |
 | ---------- | ----------- | ---------------- |
 | 2024-09-01 | No Holidays | No_bank_holidays |
@@ -75,7 +75,7 @@ Exemple de Calendar.csv
 | 2024-09-04 | Holidays    | Bank_holidays    |
 
 
-Exemple de Actuals.csv
+Exemple Actuals.csv
 | Date       | Target |
 | ---------- | ------ |
 | 2024-09-01 | 50     |
