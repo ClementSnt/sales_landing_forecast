@@ -43,6 +43,33 @@ Two model architectures are compared:
 
 ## 🧩 Example Input (simplified)
 
+Exemple de Sales.csv
+| CONSUMPTION_DATE | SALES_DATE | Sales | Revenues |
+| ---------------- | ---------- | ----- | -------- |
+| 2024-09-01       | 2024-08-01 | 10    | 500      |
+| 2024-09-01       | 2024-08-02 | 15    | 750      |
+| 2024-09-01       | 2024-08-03 | 20    | 1000     |
+| 2024-09-02       | 2024-08-01 | 5     | 250      |
+| 2024-09-02       | 2024-08-02 | 8     | 400      |
+
+
+Exemple de Calendar.csv 
+| Date       | Holidays    | Bank_holidays    |
+| ---------- | ----------- | ---------------- |
+| 2024-09-01 | No Holidays | No_bank_holidays |
+| 2024-09-02 | Holidays    | No_bank_holidays |
+| 2024-09-03 | No Holidays | Bank_holidays    |
+| 2024-09-04 | Holidays    | Bank_holidays    |
+
+
+Exemple de Actuals.csv
+| Date       | Target |
+| ---------- | ------ |
+| 2024-09-01 | 50     |
+| 2024-09-02 | 40     |
+| 2024-09-03 | 60     |
+| 2024-09-04 | 30     |
+
 
 ---
 
