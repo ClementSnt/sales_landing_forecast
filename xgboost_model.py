@@ -53,8 +53,8 @@ def prep_sales(df,mode='train'):
 
 
     # On garde que la range pertinente (longueur du pattern)
-    df_full['datedif'] = (df_full['CONSUMPTION_DATE'] - df_full['OBSERVATION_DATE']).dt.days
-    df_full = df_full[(df_full["datedif"]>=0)&(df_full["datedif"]<=90)]
+    df_full['datedif'] = (df_full['CONSUMPTION_DATE'] - df_full['SALES_DATE']).dt.days
+    df_full = df_full[(df_full["datedif"]>="A DETERMINER")&(df_full["datedif"]<="A DETERMINER")]
 
 
     # Mode train uniquement
