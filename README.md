@@ -41,6 +41,19 @@ Two model architectures are compared:
 
 ---
 
+## Results 
+
+| Modèle       | Train MAPE | Train R² | Test MAPE | Test R² |
+| ------------ | ---------- | -------- | --------- | ------- |
+| XGBoost seul | 2.00%      | 0.985    | 3.50%     | 0.955   |
+| Hybride      | 2.82%      | 0.975    | 2.90%     | 0.973   |
+
+
+- The hybrid model significantly improves test set accuracy compared to XGBoost alone.
+- Incorporating LSTM sequences allows capturing temporal sales patterns that improve forecasting but requires more data.
+
+---
+
 ## 🧩 Example Input (simplified)
 
 Exemple de Sales.csv
