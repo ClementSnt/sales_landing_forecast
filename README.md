@@ -1,63 +1,67 @@
-# 🧠 Sales Landing Forecast  
+# 🧠 Prévision des ventes  
 
-Machine learning models for daily **sales landing forecasting**.  
-This project demonstrates a complete forecasting pipeline used to predict **short/mid term sales landings** in hospitality and event management contexts.  
+Modèle de machine learning pour la prévision quotidienne des ventes.  
+Ce projet présente une pipeline complète permettant de prédire les ventes finales à court/moyen terme dans le secteur de l’événementiel (festival, event sportif etc).  
 
 ---
 
-## 📈 Overview  
+## 📈 Présentation  
 
-The goal is to forecast the final sales landing of an event or stay date based on partial booking data (observations made X days before the consumption date).  
-The models use historical booking and pricing data to learn demand patterns and predict final outcomes.
+L’objectif est de prévoir les ventes finales pour une date d’événement. Le modèle utilise les données historiques de ventes et de prix x jour avant l'événement pour apprendre les tendances de la demande et prédire les résultats finaux.  
 
-Two model architectures are compared:  
+**Architecture du modèle :**  
 
-1. **XGBoost Baseline**  
-   - Gradient boosting model trained on cumulative bookings, prices, and calendar features.  
-   - Strong benchmark for structured tabular data.  
+- **Moyenne historiques**
+  - La première partie du modèle consiste à calculer les moyennes historiques de nombres de ventes et de prix moyens à chaque jour précédent l'évennement, par jours et mois. Ces nouvelles features serviront d'input pour le deuxième niveau du model. 
 
-2. **Hybrid LSTM + XGBoost**  
-   - LSTM network captures temporal booking patterns across observation dates.  
-   - XGBoost model refines the prediction using additional features (price, calendar effects, etc.).  
-   - Designed to combine **temporal trend extraction** (via LSTM) and **feature-based correction** (via XGBoost).
+- **Régression XGBoost**  
+  - Modèle de gradient boosting entraîné sur les ventes cumulés, les prix, les variables calendaires (mois, jours, jours férié) et les moyennes obtenues précédemment.  
+
+- **Interprétabilité avec SHAP**  
+  - Calcul des valeurs SHAP pour comprendre l’impact de chaque feature sur les prédictions.  
+  - Permet d’identifier les facteurs principaux qui influencent les ventes.  
 
 ---
 
 ## ⚙️ Pipeline  
 
-1. **Data preparation**  
-   - Generation of observation sequences for each consumption date.  
-   - Calculation of cumulative bookings, prices, and derived temporal features.  
-   - Integration of calendar features (month, weekday, holidays, bank holidays).  
+1. **Préparation des données**  
+   - Calcul des cumuls de ventes, prix et features dérivées (variations relatives, métriques cumulées).  
+   - Ajout des informations calendrier (mois, jour de la semaine, jours fériés, week-end, jours non travaillés).  
+   - Gestion des outliers avec clipping et interpolation pour assurer la cohérence des données.  
 
-2. **Model training**  
-   - Separate pipelines for baseline and hybrid models.  
-   - Hyperparameter tuning via `GridSearchCV`.  
-   - Evaluation using RMSE, MAPE, and R² metrics.  
+2. **Feature engineering**
+   - Encodage cyclique pour les mois et les jours de la semaine.  
+   - Normalisation des variables continues avec `StandardScaler`.  
+   - Ajout de features dérivées comme les variations relatives par rapport aux moyennes historiques.  
 
-3. **Forecasting**  
-   - Application on new unseen data (future observation dates).  
-   - LSTM predictions are merged into the XGBoost feature space for hybrid inference.  
+4. **Entraînement du modèle**  
+   - Entraînement du modèle XGBoost sur les features préparées.  
+   - Recherche des meilleurs hyperparamètres via `GridSearchCV`.  
+   - Évaluation avec RMSE, MAPE et R² sur un split train/test.  
+
+5. **Prévision**  
+   - Application sur de nouvelles données pour prédire les ventes futures.  
+   - Fusion des prédictions avec les valeurs SHAP pour interprétation.  
+
+---
+
+## 🔧 Dépendances  
+
+- Python 3.x  
+- pandas, numpy  
+- xgboost  
+- scikit-learn  
+- shap  
+- joblib  
 
 ---
 
-## Results 
-
-| Model        | Train MAPE | Train R² | Test MAPE | Test R² |
-| ------------ | ---------- | -------- | --------- | ------- |
-| XGBoost alone| 2.00%      | 0.985    | 3.50%     | 0.955   |
-| Hybride      | 2.82%      | 0.975    | 2.90%     | 0.973   |
-
-
-- The hybrid model significantly improves test set accuracy compared to XGBoost alone.
-- Incorporating LSTM sequences allows capturing temporal sales patterns that improve forecasting but requires more data.
-
----
 
 ## 🧩 Example Input (simplified)
 
 Exemple Sales.csv
-| CONSUMPTION_DATE | SALES_DATE | Sales | Revenues |
+| Transaction_date | Date       | Sales | Revenues |
 | ---------------- | ---------- | ----- | -------- |
 | 2024-09-01       | 2024-08-01 | 10    | 500      |
 | 2024-09-01       | 2024-08-02 | 15    | 750      |
@@ -84,12 +88,3 @@ Exemple Actuals.csv
 | 2024-09-04 | 30     |
 
 
----
-
-## 🧠 Technologies  
-
-- **Python 3.10+**  
-- **Pandas**, **NumPy**, **Scikit-learn**  
-- **TensorFlow / Keras** (for LSTM)  
-- **XGBoost**  
-- **Joblib**
