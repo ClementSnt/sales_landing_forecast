@@ -57,7 +57,6 @@ L’objectif est de prévoir les ventes finales pour une date d’événement. L
 
 ---
 
-
 ## 🧩 Example Input (simplified)
 
 Exemple Sales.csv
@@ -87,4 +86,8 @@ Exemple Actuals.csv
 | 2024-09-03 | 60     |
 | 2024-09-04 | 30     |
 
+---
 
+## 🔍 Résultats
+
+Obtention d'un MAPE de 2.2% sur le jeu de test. Performance également validée lors de l'application sur de nouvelles données futures.
